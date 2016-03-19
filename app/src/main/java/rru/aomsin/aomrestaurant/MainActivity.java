@@ -5,6 +5,9 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,12 +23,22 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     //Explicit
+
     private MyManage myManage;
+    private EditText userEditText, passEditText;
+
+    private  String userString, passwordString;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Bind Widget
+        bindWidget();
+
 
         //Request SQLite
         myManage = new MyManage(this);
@@ -39,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }//Main Method
+
+    public void clickLogin(View view) {
+        userString = userEditText.getText().toString().trim();
+        passwordString = passEditText.getText().toString().trim();
+
+//Check Space
+        if (userString.equals("") || passwordString.equals("") ) {
+            //Have Space
+            myAlert("มีช่องว่าง");
+
+        } else {
+            //No Space
+        }
+
+    }//ClickLogin
+
+    private void myAlert(String strMessage) {
+        Toast.makeText(MainActivity.this, strMessage, Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void bindWidget() {
+        userEditText = (EditText) findViewById(R.id.editText);
+        passEditText = (EditText) findViewById(R.id.editText2);
+    }
 
     private void synJSONtoSQLite() {
         //Connected http://

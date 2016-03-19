@@ -1,5 +1,6 @@
 package rru.aomsin.aomrestaurant;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -16,11 +17,18 @@ public class MainActivity extends AppCompatActivity {
         myManage = new MyManage(this);
 
         //Test Add Value
-        testAddValue();
-
-
+        //testAddValue();
+        //Delete All SQLite
+        deleteAllSQLite();
 
     }//Main Method
+
+    private void deleteAllSQLite() {
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
+                MODE_PRIVATE, null);
+        sqLiteDatabase.delete(MyManage.user_table, null, null);
+        sqLiteDatabase.delete(MyManage.food_table, null, null);
+    }
 
     private void testAddValue() {
         myManage.addValue(1, "user" , "pass" , "name");

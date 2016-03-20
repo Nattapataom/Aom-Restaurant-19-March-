@@ -1,5 +1,6 @@
 package rru.aomsin.aomrestaurant;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -72,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
     private void checkUser() {
         try {
             String[] myResultStrings = myManage.searchUser(userString);
+
+            //Check Password
+            if (passwordString.equals(myResultStrings[2])) {
+                    //Password True
+                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+                intent.putExtra("Officer", myResultStrings[3]);
+                startActivity(intent);
+
+            } else {
+                //Password False
+            myAlert("Password ผิด");
+            }
 
             myAlert("ยินดีต้อนรับ" + myResultStrings[3]);
 

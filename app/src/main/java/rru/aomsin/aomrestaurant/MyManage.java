@@ -2,6 +2,7 @@ package rru.aomsin.aomrestaurant;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -38,6 +39,33 @@ public class MyManage {
         readSqLiteDatabase = myOpenHelper.getReadableDatabase();
 
     }//Constructor
+
+    public String[] searchUser(String strUser) {
+        try {
+            String[] resultStrings = null;
+            Cursor cursor = readSqLiteDatabase.query(user_table,
+                    new String[]{column_id,
+                     column_User, column_Password, column_Name},
+                    column_User + "=?" ,
+                    new  String[] {String.valueOf(strUser)},
+            null, null, null , null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    resultStrings =new String[4];
+                    for (int i =0;i<4; i++){
+                        resultStrings[i] = cursor.getString(i);
+                    }
+                }
+            }//if
+            cursor.close();
+            return  resultStrings;
+        } catch (Exception e) {
+            return  null    ;
+        }
+
+       // return new String[0];
+    }
+
 
     public long addValue(int intTABLE,
                          String strColumn2,
